@@ -4,24 +4,28 @@ import java.util.*;
 import java.util.function.UnaryOperator;
 
 public class MyArrayList implements List {
-    private Object[] list;
+    private int listSize = 0;
+    private Object[] list = new Object[listSize];
+
 
 //+
     @Override
     public int size() {
-        return list.length;
+        return (int) Arrays.stream(list).count();
     }
 //+
     @Override
     public boolean isEmpty() {
-        return list.length == 0;
+        return Arrays.stream(list).count() == 0;
     }
 //+
     @Override
     public boolean contains(Object o) {
-        for(Object object : list) {
-           if (object.equals(o)) {
-               return true;
+        if (listSize!=0) {
+            for (Object object : list) {
+                if (o.equals(object)) {
+                    return true;
+                }
             }
         }
         return false;
@@ -34,16 +38,26 @@ public class MyArrayList implements List {
 
     @Override
     public Object[] toArray() {
-        return new Object[0];
+        return Arrays.copyOf(list,list.length);
     }
 //+
     @Override
     public boolean add(Object o) {
-        return false;
+        list = new Object[listSize+1];
+        list[list.length-1] = o;
+        return true;
     }
 //+
     @Override
     public boolean remove(Object o) {
+        if (listSize!=0) {
+            for (Object object : list) {
+                if (o.equals(object)) {
+                    
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
