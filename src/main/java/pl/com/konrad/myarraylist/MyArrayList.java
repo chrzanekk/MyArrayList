@@ -4,19 +4,26 @@ import java.util.*;
 import java.util.function.UnaryOperator;
 
 public class MyArrayList implements List {
+    private Object[] list;
+
 //+
     @Override
     public int size() {
-        return 0;
+        return list.length;
     }
 //+
     @Override
     public boolean isEmpty() {
-        return false;
+        return list.length == 0;
     }
 //+
     @Override
     public boolean contains(Object o) {
+        for(Object object : list) {
+           if (object.equals(o)) {
+               return true;
+            }
+        }
         return false;
     }
 
