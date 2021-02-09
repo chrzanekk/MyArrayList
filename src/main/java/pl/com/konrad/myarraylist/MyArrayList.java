@@ -18,10 +18,10 @@ public class MyArrayList implements List {
         return getSize(head);
     }
 
-    private static int getSize(Node node) {
-        Node current = node;
+    private int getSize(Node head) {
+        Node current = head;
         int sum = 0;
-        if (current == null) {
+        if (isEmpty()) {
             throw new NullPointerException("List is empty.");
         } else {
             while (current != null) {
@@ -48,7 +48,7 @@ public class MyArrayList implements List {
         }
     }
 
-    private static boolean isContains(Object o, Node head) {
+    private boolean isContains(Object o, Node head) {
         Node current = head;
         while (current != null && !current.data.equals(o)) {
             if (current.data.equals(o)) {
@@ -72,16 +72,16 @@ public class MyArrayList implements List {
     //+
     @Override
     public boolean add(Object o) {
-        return addNew(o,head);
+        return addNode(o, head);
     }
-    private boolean addNew(Object o, Node head) {
+
+    private boolean addNode(Object o, Node head) {
         Node current = head;
         Node newNode = new Node(o);
         if (current == null) {
             this.head = newNode;
-        }
-        else {
-            while(current.next != null) {
+        } else {
+            while (current.next != null) {
                 current = current.next;
             }
             current.next = newNode;
@@ -96,6 +96,31 @@ public class MyArrayList implements List {
 
         return false;
     }
+
+    private boolean removeNode(Object o, Node head) {
+        Node current = head;
+        Node previous = null;
+        int index = 0;
+        if (current == null) {
+            throw new NullPointerException("List is empty.");
+        } else {
+            while (current.next != null && index++ < indexOf(o))
+            previous = current;
+            current = current.next;
+        }
+        if (indexOf(o) > index) {
+            throw new IndexOutOfBoundsException("Index out of bound.");
+        }
+        if (previous == null) {
+            this.head = current.next;
+        } else if (current.next == null) {
+            previous.next = null;
+        } else {
+            previous.next = current.next;
+        }
+        return true;
+    }
+
 
     @Override
     public boolean addAll(Collection c) {
@@ -150,7 +175,21 @@ public class MyArrayList implements List {
     //+
     @Override
     public int indexOf(Object o) {
-        return 0;
+        return indexOfNode(o);
+    }
+
+    private int indexOfNode(Object o) {
+        Node current = head;
+        int index = 0;
+        if (isEmpty()) {
+            throw new NullPointerException("List is empty.");
+        } else {
+            while (current != null && !current.equals(o)) {
+                index++;
+                current = current.next;
+            }
+        }
+        return index;
     }
 
     //+
