@@ -92,9 +92,7 @@ public class MyArrayList implements List {
     //+
     @Override
     public boolean remove(Object o) {
-
-
-        return false;
+        return removeNode(o,head);
     }
 
     private boolean removeNode(Object o, Node head) {
@@ -105,15 +103,15 @@ public class MyArrayList implements List {
             throw new NullPointerException("List is empty.");
         } else {
             while (current.next != null && index++ < indexOf(o))
-            previous = current;
+                previous = current;
             current = current.next;
         }
         if (indexOf(o) > index) {
             throw new IndexOutOfBoundsException("Index out of bound.");
         }
-        if (previous == null) {
+        if (previous == null && current.next != null) {
             this.head = current.next;
-        } else if (current.next == null) {
+        } else if (previous != null && current.next == null) {
             previous.next = null;
         } else {
             previous.next = current.next;
@@ -238,7 +236,15 @@ public class MyArrayList implements List {
 
     @Override
     public Object[] toArray(Object[] a) {
-        return new Object[0];
+        return addToArray(a,head);
+    }
+    private Object[] addToArray(Object[] a, Node head) {
+        Node current = head;
+        while (current != null) {
+            a[indexOf(current)] = current.data;
+            current = current.next;
+        }
+        return a;
     }
 
     // nie wiem czy mi się settery przydadzą, czy węzeł jest DTOsem czy nie.
