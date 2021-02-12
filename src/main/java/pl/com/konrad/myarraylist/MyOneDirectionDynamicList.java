@@ -3,11 +3,11 @@ package pl.com.konrad.myarraylist;
 import java.util.*;
 import java.util.function.UnaryOperator;
 
-public class MyArrayList implements List {
+public class MyOneDirectionDynamicList implements List {
     private Node head;
 
 
-    public MyArrayList() {
+    public MyOneDirectionDynamicList() {
         this.head = null;
     }
 
@@ -100,7 +100,6 @@ public class MyArrayList implements List {
         Node previous = null;
         int index = 0;
         if (current == null) {
-//            swoj runtajmowy wyjatek
             throw new NullPointerException("List is empty.");
         } else {
             while (current.next != null && index++ < indexOf(o))
