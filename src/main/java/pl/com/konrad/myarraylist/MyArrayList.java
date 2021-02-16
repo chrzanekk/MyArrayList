@@ -73,6 +73,18 @@ public class MyArrayList implements List {
     //++
     @Override
     public boolean remove(Object o) {
+        return removeObject(o);
+    }
+
+    private boolean removeObject(Object o) {
+        if(contains(o)) {
+            int index = indexOf(o);
+            for (int i = index; i < array.length; i++) {
+                array[i] = replaceElement(i+1,get(i+1));
+            }
+            int lastIndex = lastIndexOf(null);
+            removeObject(lastIndex);
+        }
         return false;
     }
 
@@ -120,9 +132,10 @@ public class MyArrayList implements List {
                 if (i == index) {
                     return array[i];
                 }
+
             }
         }
-        return new IndexOutOfBoundsException("There is no object with the given index.");
+        return null;
     }
 
     //++
@@ -135,7 +148,7 @@ public class MyArrayList implements List {
         if (checkIsIndexCorrect(index)) {
             array[index] = o;
         }
-        return new IndexOutOfBoundsException("There is no object with the given index.");
+        return new IndexOutOfBoundsException("Index out of bound.");
     }
 
     //++
