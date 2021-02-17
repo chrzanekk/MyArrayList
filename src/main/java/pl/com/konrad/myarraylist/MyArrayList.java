@@ -4,8 +4,9 @@ import java.util.*;
 import java.util.function.UnaryOperator;
 
 public class MyArrayList implements List {
-    private int initialSize = 10;
-    Object[] array = new Object[initialSize];
+//    zmienic na stala
+    private final int initialSize = 10;
+    private Object[] array = new Object[initialSize];
 
     //++
     @Override
@@ -77,10 +78,10 @@ public class MyArrayList implements List {
     }
 
     private boolean removeObject(Object o) {
-        if(contains(o)) {
+        if (contains(o)) {
             int index = indexOf(o);
             for (int i = index; i < array.length; i++) {
-                array[i] = replaceElement(i+1,get(i+1));
+                array[i] = replaceElement(i + 1, get(i + 1));
             }
             int lastIndex = lastIndexOf(null);
             removeObject(lastIndex);
@@ -132,7 +133,6 @@ public class MyArrayList implements List {
                 if (i == index) {
                     return array[i];
                 }
-
             }
         }
         return null;
