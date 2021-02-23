@@ -4,9 +4,9 @@ import java.util.*;
 import java.util.function.UnaryOperator;
 
 public class MyArrayList implements List {
-//    zmienic na stala
-    private final int initialSize = 10;
-    private Object[] array = new Object[initialSize];
+    //    zmienic na stala
+    private final static int INITIAL_SIZE = 10;
+    private Object[] array = new Object[INITIAL_SIZE];
 
     //++
     @Override
@@ -31,13 +31,13 @@ public class MyArrayList implements List {
 
     //++
     @Override
-    public boolean contains(Object o) {
-        return isObjectExists(o);
+    public boolean contains(Object element) {
+        return isObjectExists(element);
     }
 
-    private boolean isObjectExists(Object o) {
+    private boolean isObjectExists(Object element) {
         for (Object value : array) {
-            if (value.equals(o)) {
+            if (value.equals(element)) {
                 return true;
             }
         }
@@ -56,30 +56,30 @@ public class MyArrayList implements List {
 
     //++
     @Override
-    public boolean add(Object o) {
-        return addToArray(o);
+    public boolean add(Object element) {
+        return addToArray(element);
     }
 
-    private boolean addToArray(Object o) {
-        if (size() == initialSize) {
-            array = Arrays.copyOf(array, initialSize + 1);
-            array[initialSize + 1] = o;
+    private boolean addToArray(Object element) {
+        if (size() == INITIAL_SIZE) {
+            array = Arrays.copyOf(array, INITIAL_SIZE + 1);
+            array[INITIAL_SIZE + 1] = element;
         } else {
             int lastIndex = lastIndexOf(null);
-            array[lastIndex] = o;
+            array[lastIndex] = element;
         }
         return true;
     }
 
     //++
     @Override
-    public boolean remove(Object o) {
-        return removeObject(o);
+    public boolean remove(Object element) {
+        return removeObject(element);
     }
 
-    private boolean removeObject(Object o) {
-        if (contains(o)) {
-            int index = indexOf(o);
+    private boolean removeObject(Object element) {
+        if (contains(element)) {
+            int index = indexOf(element);
             for (int i = index; i < array.length; i++) {
                 array[i] = replaceElement(i + 1, get(i + 1));
             }
@@ -116,9 +116,10 @@ public class MyArrayList implements List {
     }
 
     private void clearArray() {
-        for (int i = 0; i < array.length; i++) {
-            array[i] = null;
-        }
+//        for (int i = 0; i < array.length; i++) {
+//            array[i] = null;
+//        }
+        array = new Object[INITIAL_SIZE];
     }
 
     //++
@@ -144,9 +145,9 @@ public class MyArrayList implements List {
         return replaceElement(index, element);
     }
 
-    private Object replaceElement(int index, Object o) {
+    private Object replaceElement(int index, Object element) {
         if (checkIsIndexCorrect(index)) {
-            array[index] = o;
+            array[index] = element;
         }
         return new IndexOutOfBoundsException("Index out of bound.");
     }
@@ -157,20 +158,53 @@ public class MyArrayList implements List {
 
     }
 
+    private void addElementByIndex(int index, Object element) {
+        if (checkIsIndexCorrect(index)) {
+            if (size() == INITIAL_SIZE) {
+                array = Arrays.copyOf(array, INITIAL_SIZE + 1);
+            }
+            int lastIndex = lastIndexOf(null);
+            for (int i = index; i < lastIndex; i++) {
+                array[i + 1] = array[i];
+            }
+            array[index] = add(element);
+//            if (lastIndex - index >= 0) System.arraycopy(array, index, array, index + 1, lastIndex - index);
+//            array[index] = add(element);
+        } else {
+            throw new IndexOutOfBoundsException("Index out of bound.");
+        }
+    }
+
     //++
     @Override
     public Object remove(int index) {
-        return null;
+        return removeObjectByIndex(index);
+    }
+//to jeszcze przemyslec jesli index jest w zakresie ale nie zwraca obiektu tylko nulla
+    private Object removeObjectByIndex(int index) {
+        if (checkIsIndexCorrect(index)) {
+            Object elementToReturn = get(index);
+            int iterations = size();
+            if (size() < INITIAL_SIZE) {
+                iterations = lastIndexOf(null);
+            }
+            for (int i = index; i < iterations; i++) {
+                array[i] = array[i + 1];
+            }
+            return elementToReturn;
+        } else {
+            return new IndexOutOfBoundsException("Index out of bound");
+        }
     }
 
     //++
     @Override
-    public int indexOf(Object o) {
-        return indexOfObject(o);
+    public int indexOf(Object element) {
+        return indexOfObject(element);
     }
 
-    private int indexOfObject(Object o) {
-        if (o == null) {
+    private int indexOfObject(Object element) {
+        if (element == null) {
             for (int i = 0; i < array.length; i++) {
                 if (array[i] == null) {
                     return i;
@@ -178,7 +212,7 @@ public class MyArrayList implements List {
             }
         } else {
             for (int i = 0; i < array.length; i++) {
-                if (o.equals(array[i])) {
+                if (element.equals(array[i])) {
                     return i;
                 }
             }
@@ -188,12 +222,12 @@ public class MyArrayList implements List {
 
     //++
     @Override
-    public int lastIndexOf(Object o) {
-        return lastIndexOfArray(o, array.length);
+    public int lastIndexOf(Object element) {
+        return lastIndexOfArray(element, array.length);
     }
 
-    private int lastIndexOfArray(Object o, int size) {
-        if (o == null) {
+    private int lastIndexOfArray(Object element, int size) {
+        if (element == null) {
             for (int i = size - 1; i >= 0; i--) {
                 if (array[i] == null) {
                     return i;
@@ -201,7 +235,7 @@ public class MyArrayList implements List {
             }
         } else {
             for (int i = size - 1; i >= 0; i--) {
-                if (o.equals(array[i])) {
+                if (element.equals(array[i])) {
                     return i;
                 }
             }
