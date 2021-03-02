@@ -155,7 +155,7 @@ public class MyArrayList implements List {
     //++
     @Override
     public void add(int index, Object element) {
-
+//todo uzupelnic
     }
 
     private void addElementByIndex(int index, Object element) {
@@ -180,7 +180,8 @@ public class MyArrayList implements List {
     public Object remove(int index) {
         return removeObjectByIndex(index);
     }
-//to jeszcze przemyslec jesli index jest w zakresie ale nie zwraca obiektu tylko nulla
+
+    //todo to jeszcze przemyslec jesli index jest w zakresie ale nie zwraca obiektu tylko nulla
     private Object removeObjectByIndex(int index) {
         if (checkIsIndexCorrect(index)) {
             Object elementToReturn = get(index);
