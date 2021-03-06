@@ -4,14 +4,13 @@ import java.util.*;
 import java.util.function.UnaryOperator;
 
 public class MyArrayList implements List {
-    //    zmienic na stala
     private final static int INITIAL_SIZE = 10;
-    private Object[] array = new Object[INITIAL_SIZE];
+    private Object[] myArray = new Object[INITIAL_SIZE];
 
     //++
     @Override
     public int size() {
-        return array.length;
+        return myArray.length;
     }
 
     //++
@@ -21,7 +20,7 @@ public class MyArrayList implements List {
     }
 
     private boolean isArrayEmpty() {
-        for (Object o : array) {
+        for (Object o : myArray) {
             if (o != null) {
                 return false;
             }
@@ -36,7 +35,7 @@ public class MyArrayList implements List {
     }
 
     private boolean isObjectExists(Object element) {
-        for (Object value : array) {
+        for (Object value : myArray) {
             if (value.equals(element)) {
                 return true;
             }
@@ -62,11 +61,11 @@ public class MyArrayList implements List {
 
     private boolean addToArray(Object element) {
         if (size() == INITIAL_SIZE) {
-            array = Arrays.copyOf(array, INITIAL_SIZE + 1);
-            array[INITIAL_SIZE + 1] = element;
+            myArray = Arrays.copyOf(myArray, INITIAL_SIZE + 1);
+            myArray[INITIAL_SIZE + 1] = element;
         } else {
             int lastIndex = lastIndexOf(null);
-            array[lastIndex] = element;
+            myArray[lastIndex] = element;
         }
         return true;
     }
@@ -80,8 +79,8 @@ public class MyArrayList implements List {
     private boolean removeObject(Object element) {
         if (contains(element)) {
             int index = indexOf(element);
-            for (int i = index; i < array.length; i++) {
-                array[i] = replaceElement(i + 1, get(i + 1));
+            for (int i = index; i < myArray.length; i++) {
+                myArray[i] = replaceElement(i + 1, get(i + 1));
             }
             int lastIndex = lastIndexOf(null);
             removeObject(lastIndex);
@@ -119,7 +118,7 @@ public class MyArrayList implements List {
 //        for (int i = 0; i < array.length; i++) {
 //            array[i] = null;
 //        }
-        array = new Object[INITIAL_SIZE];
+        myArray = new Object[INITIAL_SIZE];
     }
 
     //++
@@ -130,9 +129,9 @@ public class MyArrayList implements List {
 
     private Object getObjectByIndex(int index) {
         if (checkIsIndexCorrect(index)) {
-            for (int i = 0; i < array.length; i++) {
+            for (int i = 0; i < myArray.length; i++) {
                 if (i == index) {
-                    return array[i];
+                    return myArray[i];
                 }
             }
         }
@@ -147,7 +146,7 @@ public class MyArrayList implements List {
 
     private Object replaceElement(int index, Object element) {
         if (checkIsIndexCorrect(index)) {
-            array[index] = element;
+            myArray[index] = element;
         }
         return new IndexOutOfBoundsException("Index out of bound.");
     }
@@ -155,19 +154,19 @@ public class MyArrayList implements List {
     //++
     @Override
     public void add(int index, Object element) {
-//todo uzupelnic
+        addElementByIndex(index,element);
     }
 
     private void addElementByIndex(int index, Object element) {
         if (checkIsIndexCorrect(index)) {
             if (size() == INITIAL_SIZE) {
-                array = Arrays.copyOf(array, INITIAL_SIZE + 1);
+                myArray = Arrays.copyOf(myArray, INITIAL_SIZE + 1);
             }
             int lastIndex = lastIndexOf(null);
             for (int i = index; i < lastIndex; i++) {
-                array[i + 1] = array[i];
+                myArray[i + 1] = myArray[i];
             }
-            array[index] = add(element);
+            myArray[index] = add(element);
 //            if (lastIndex - index >= 0) System.arraycopy(array, index, array, index + 1, lastIndex - index);
 //            array[index] = add(element);
         } else {
@@ -190,7 +189,7 @@ public class MyArrayList implements List {
                 iterations = lastIndexOf(null);
             }
             for (int i = index; i < iterations; i++) {
-                array[i] = array[i + 1];
+                myArray[i] = myArray[i + 1];
             }
             return elementToReturn;
         } else {
@@ -206,14 +205,14 @@ public class MyArrayList implements List {
 
     private int indexOfObject(Object element) {
         if (element == null) {
-            for (int i = 0; i < array.length; i++) {
-                if (array[i] == null) {
+            for (int i = 0; i < myArray.length; i++) {
+                if (myArray[i] == null) {
                     return i;
                 }
             }
         } else {
-            for (int i = 0; i < array.length; i++) {
-                if (element.equals(array[i])) {
+            for (int i = 0; i < myArray.length; i++) {
+                if (element.equals(myArray[i])) {
                     return i;
                 }
             }
@@ -224,19 +223,19 @@ public class MyArrayList implements List {
     //++
     @Override
     public int lastIndexOf(Object element) {
-        return lastIndexOfArray(element, array.length);
+        return lastIndexOfArray(element, myArray.length);
     }
 
     private int lastIndexOfArray(Object element, int size) {
         if (element == null) {
             for (int i = size - 1; i >= 0; i--) {
-                if (array[i] == null) {
+                if (myArray[i] == null) {
                     return i;
                 }
             }
         } else {
             for (int i = size - 1; i >= 0; i--) {
-                if (element.equals(array[i])) {
+                if (element.equals(myArray[i])) {
                     return i;
                 }
             }
@@ -258,6 +257,19 @@ public class MyArrayList implements List {
     @Override
     public List subList(int fromIndex, int toIndex) {
         return null;
+    }
+
+    private List getSubList(int fromIndex, int toIndex) {
+        List newSubList = new ArrayList();
+        if(checkIsRangeIndexIsCorrect(fromIndex,toIndex)) {
+            for (int i = fromIndex; i<= toIndex; i++) {
+                newSubList.add(myArray[i]);
+            }
+            return newSubList;
+        }
+        else {
+            throw new IllegalArgumentException("Wrong input");
+        }
     }
 
     @Override
@@ -288,11 +300,19 @@ public class MyArrayList implements List {
     }
 
     private boolean checkIsIndexCorrect(int index) {
-        if ((index < 0 || index > array.length) && array.length > 0) {
+        if ((index < 0 || index > myArray.length) && myArray.length > 0) {
             return false;
         } else {
             return true;
         }
+    }
+
+    private boolean checkIsRangeIndexIsCorrect(int fromIndex, int toIndex) {
+        if (fromIndex < 0) {
+            return false;
+        } else if (toIndex > myArray.length) {
+            return false;
+        } else return fromIndex <= toIndex;
     }
 }
 

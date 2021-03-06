@@ -19,6 +19,8 @@ public class Main {
         catAnimalHouse.makeSound();
         System.out.println("-------------");
         gooseAnimalHouse.makeSound();
+        System.out.println("-------------");
+
     }
 
 }
