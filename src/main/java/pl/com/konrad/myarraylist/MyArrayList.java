@@ -4,8 +4,11 @@ import java.util.*;
 import java.util.function.UnaryOperator;
 
 public class MyArrayList implements List {
-    private final static int INITIAL_SIZE = 10;
+    private final static int INITIAL_SIZE = 1;
     private Object[] myArray = new Object[INITIAL_SIZE];
+
+    public MyArrayList() {
+    }
 
     //++
     @Override
@@ -60,11 +63,12 @@ public class MyArrayList implements List {
     }
 
     private boolean addToArray(Object element) {
-        if (size() == INITIAL_SIZE) {
-            myArray = Arrays.copyOf(myArray, INITIAL_SIZE + 1);
-            myArray[INITIAL_SIZE + 1] = element;
-        } else {
+        if (checkIsArrayFull()) {
+            myArray = Arrays.copyOf(myArray, myArray.length + 1);
             int lastIndex = lastIndexOf(null);
+            myArray[lastIndex] = element;
+        } else {
+            int lastIndex = indexOf(null);
             myArray[lastIndex] = element;
         }
         return true;
@@ -79,11 +83,15 @@ public class MyArrayList implements List {
     private boolean removeObject(Object element) {
         if (contains(element)) {
             int index = indexOf(element);
-            for (int i = index; i < myArray.length; i++) {
-                myArray[i] = replaceElement(i + 1, get(i + 1));
+            if (index < myArray.length - 1) {
+                for (int i = index; i < myArray.length - 1; i++) {
+                    myArray[i] = myArray[i + 1];
+                    myArray[i + 1] = null;
+                }
+            } else {
+                int lastIndex = lastIndexOf(null);
+                myArray[lastIndex] = null;
             }
-            int lastIndex = lastIndexOf(null);
-            removeObject(lastIndex);
         }
         return false;
     }
@@ -154,12 +162,12 @@ public class MyArrayList implements List {
     //++
     @Override
     public void add(int index, Object element) {
-        addElementByIndex(index,element);
+        addElementByIndex(index, element);
     }
 
     private void addElementByIndex(int index, Object element) {
         if (checkIsIndexCorrect(index)) {
-            if (size() == INITIAL_SIZE) {
+            if (checkIsArrayFull()) {
                 myArray = Arrays.copyOf(myArray, INITIAL_SIZE + 1);
             }
             int lastIndex = lastIndexOf(null);
@@ -184,12 +192,14 @@ public class MyArrayList implements List {
     private Object removeObjectByIndex(int index) {
         if (checkIsIndexCorrect(index)) {
             Object elementToReturn = get(index);
-            int iterations = size();
-            if (size() < INITIAL_SIZE) {
-                iterations = lastIndexOf(null);
-            }
-            for (int i = index; i < iterations; i++) {
-                myArray[i] = myArray[i + 1];
+            if (index < myArray.length - 1) {
+                Object temp;
+                for (int i = index; i < myArray.length - 1; i++) {
+                    myArray[i] = myArray[i + 1];
+                    myArray[i + 1] = null;
+                }
+            } else {
+                myArray[myArray.length - 1] = null;
             }
             return elementToReturn;
         } else {
@@ -261,13 +271,12 @@ public class MyArrayList implements List {
 
     private List getSubList(int fromIndex, int toIndex) {
         List newSubList = new ArrayList();
-        if(checkIsRangeIndexIsCorrect(fromIndex,toIndex)) {
-            for (int i = fromIndex; i<= toIndex; i++) {
+        if (checkIsRangeIndexIsCorrect(fromIndex, toIndex)) {
+            for (int i = fromIndex; i <= toIndex; i++) {
                 newSubList.add(myArray[i]);
             }
             return newSubList;
-        }
-        else {
+        } else {
             throw new IllegalArgumentException("Wrong input");
         }
     }
@@ -313,6 +322,13 @@ public class MyArrayList implements List {
         } else if (toIndex > myArray.length) {
             return false;
         } else return fromIndex <= toIndex;
+    }
+
+    private boolean checkIsArrayFull() {
+        if ((get(myArray.length - 1)) != null) {
+            return true;
+        }
+        return false;
     }
 }
 

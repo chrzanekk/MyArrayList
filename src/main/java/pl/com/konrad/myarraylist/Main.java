@@ -21,6 +21,36 @@ public class Main {
         gooseAnimalHouse.makeSound();
         System.out.println("-------------");
 
+        MyArrayList myArrayList = new MyArrayList();
+        System.out.println("Initial size: " + myArrayList.size());
+        Object test1 = new Object();
+        myArrayList.add(test1);
+        Object test2 = new Object();
+        myArrayList.add(test2);
+        Object test3 = new Object();
+        myArrayList.add(test3);
+        Object test4 = new Object();
+        myArrayList.add(test4);
+        System.out.println("New size: " + myArrayList.size());
+        System.out.println("Object of index 9: " + myArrayList.get(9));
+        System.out.println("Index of null object: " + myArrayList.indexOf(null));
+        System.out.println("Index of test1 object: " + myArrayList.indexOf(test1));
+        System.out.println("Index of test1 object: " + myArrayList.indexOf(test2));
+
+        System.out.print("[");
+        for (int i = 0; i < myArrayList.size(); i++) {
+            System.out.print(myArrayList.get(i) + ", ");
+        }
+        System.out.println("]");
+
+        myArrayList.remove(0);
+
+        System.out.print("[");
+        for (int i = 0; i < myArrayList.size(); i++) {
+            System.out.print(myArrayList.get(i) + ", ");
+        }
+        System.out.println("]");
+
     }
 
 }
