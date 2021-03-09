@@ -2,7 +2,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import pl.com.konrad.myarraylist.MyArrayList;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class MyArrayListTest {
     public static MyArrayList myArrayList;
@@ -19,7 +19,7 @@ public class MyArrayListTest {
 
     @Test
     public void testSizeMethod() {
-        int size = 11;
+        int size = 10;
 
         int result = myArrayList.size();
 
@@ -27,9 +27,18 @@ public class MyArrayListTest {
     }
 
     @Test
-    public void testAddMethod() {
+    public void testAddMethodByObject() {
         int size = 11;
         myArrayList.add(new Object());
+        int result = myArrayList.size();
+
+        assertEquals(size, result);
+    }
+
+    @Test
+    public void testAddMethodByIndex() {
+        int size = 10;
+        myArrayList.add(1, new Object());
         int result = myArrayList.size();
 
         assertEquals(size, result);
@@ -40,7 +49,7 @@ public class MyArrayListTest {
         myArrayList.remove(myArrayList.get(0));
         Object result = myArrayList.get(myArrayList.size()-1);
 
-        assertEquals(null, result);
+        assertNull(result);
     }
 
     @Test
@@ -48,7 +57,7 @@ public class MyArrayListTest {
         myArrayList.remove(0);
         Object result = myArrayList.get(myArrayList.size()-1);
 
-        assertEquals(null, result);
+        assertNull(result);
     }
 
     @Test
@@ -56,7 +65,7 @@ public class MyArrayListTest {
 
         boolean result = myArrayList.contains(myArrayList.get(0));
 
-        assertEquals(true,result);
+        assertTrue(result);
     }
 
     @Test

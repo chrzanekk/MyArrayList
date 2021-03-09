@@ -10,13 +10,13 @@ public class MyArrayList implements List {
     public MyArrayList() {
     }
 
-    //++
+    //++ tested
     @Override
     public int size() {
         return myArray.length;
     }
 
-    //++
+    //++ tested
     @Override
     public boolean isEmpty() {
         return isArrayEmpty();
@@ -31,7 +31,7 @@ public class MyArrayList implements List {
         return true;
     }
 
-    //++
+    //++ tested
     @Override
     public boolean contains(Object element) {
         return isObjectExists(element);
@@ -56,7 +56,7 @@ public class MyArrayList implements List {
         return new Object[0];
     }
 
-    //++
+    //++ tested
     @Override
     public boolean add(Object element) {
         return addToArray(element);
@@ -65,16 +65,17 @@ public class MyArrayList implements List {
     private boolean addToArray(Object element) {
         if (checkIsArrayFull()) {
             myArray = Arrays.copyOf(myArray, myArray.length + 1);
+//            variable lastIndex only for test method lastIndexOf()
             int lastIndex = lastIndexOf(null);
             myArray[lastIndex] = element;
         } else {
-            int lastIndex = indexOf(null);
+            int lastIndex = lastIndexOf(null);
             myArray[lastIndex] = element;
         }
         return true;
     }
 
-    //++
+    //++ tested
     @Override
     public boolean remove(Object element) {
         return removeObject(element);
@@ -123,13 +124,10 @@ public class MyArrayList implements List {
     }
 
     private void clearArray() {
-//        for (int i = 0; i < array.length; i++) {
-//            array[i] = null;
-//        }
         myArray = new Object[INITIAL_SIZE];
     }
 
-    //++
+    //++ tested
     @Override
     public Object get(int index) {
         return getObjectByIndex(index);
@@ -170,11 +168,10 @@ public class MyArrayList implements List {
             if (checkIsArrayFull()) {
                 myArray = Arrays.copyOf(myArray, INITIAL_SIZE + 1);
             }
-            int lastIndex = lastIndexOf(null);
-            for (int i = index; i < lastIndex; i++) {
+            for (int i = index; i < myArray.length-1; i++) {
                 myArray[i + 1] = myArray[i];
             }
-            myArray[index] = add(element);
+            myArray[index] = element;
 //            if (lastIndex - index >= 0) System.arraycopy(array, index, array, index + 1, lastIndex - index);
 //            array[index] = add(element);
         } else {
@@ -193,7 +190,6 @@ public class MyArrayList implements List {
         if (checkIsIndexCorrect(index)) {
             Object elementToReturn = get(index);
             if (index < myArray.length - 1) {
-                Object temp;
                 for (int i = index; i < myArray.length - 1; i++) {
                     myArray[i] = myArray[i + 1];
                     myArray[i + 1] = null;
@@ -207,7 +203,7 @@ public class MyArrayList implements List {
         }
     }
 
-    //++
+    //++ tested
     @Override
     public int indexOf(Object element) {
         return indexOfObject(element);
@@ -230,7 +226,7 @@ public class MyArrayList implements List {
         return -1;
     }
 
-    //++
+    //++ tested
     @Override
     public int lastIndexOf(Object element) {
         return lastIndexOfArray(element, myArray.length);
