@@ -65,7 +65,7 @@ public class MyArrayList implements List {
     private boolean addToArray(Object element) {
         if (checkIsArrayFull()) {
             myArray = Arrays.copyOf(myArray, myArray.length + 1);
-//            variable lastIndex only for test method lastIndexOf()
+//            variable lastIndex only for test method lastIndexOf() - do poprawy
             int lastIndex = lastIndexOf(null);
             myArray[lastIndex] = element;
         } else {
@@ -80,7 +80,7 @@ public class MyArrayList implements List {
     public boolean remove(Object element) {
         return removeObject(element);
     }
-
+//todo zmiana rozmiaru listy po usunieciu obiektu - czy trzeba
     private boolean removeObject(Object element) {
         if (contains(element)) {
             int index = indexOf(element);
@@ -186,6 +186,7 @@ public class MyArrayList implements List {
     }
 
     //todo to jeszcze przemyslec jesli index jest w zakresie ale nie zwraca obiektu tylko nulla
+    //todo wielkosc tablicy czy zmienic.
     private Object removeObjectByIndex(int index) {
         if (checkIsIndexCorrect(index)) {
             Object elementToReturn = get(index);
