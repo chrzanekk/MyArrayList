@@ -4,7 +4,7 @@ import java.util.*;
 import java.util.function.UnaryOperator;
 
 public class MyArrayList implements List {
-    private final static int INITIAL_SIZE = 1;
+    private final static int INITIAL_SIZE = 0;
     private Object[] myArray = new Object[INITIAL_SIZE];
 
     public MyArrayList() {
@@ -120,7 +120,7 @@ public class MyArrayList implements List {
 
     }
 
-    //++
+    //++ testes
     @Override
     public void clear() {
         clearArray();
@@ -147,7 +147,7 @@ public class MyArrayList implements List {
         return new IndexOutOfBoundsException("Index out of bound.");
     }
 
-    //++
+    //++ tested
     @Override
     public Object set(int index, Object element) {
         return replaceElement(index, element);
@@ -155,12 +155,14 @@ public class MyArrayList implements List {
 
     private Object replaceElement(int index, Object element) {
         if (checkIsIndexCorrect(index)) {
+            Object objectToReturn = myArray[index];
             myArray[index] = element;
+            return  objectToReturn;
         }
         return new IndexOutOfBoundsException("Index out of bound.");
     }
 
-    //++
+    //++ tested
     @Override
     public void add(int index, Object element) {
         addElementByIndex(index, element);
@@ -175,21 +177,17 @@ public class MyArrayList implements List {
                 myArray[i + 1] = myArray[i];
             }
             myArray[index] = element;
-//            if (lastIndex - index >= 0) System.arraycopy(array, index, array, index + 1, lastIndex - index);
-//            array[index] = add(element);
         } else {
             throw new IndexOutOfBoundsException("Index out of bound.");
         }
     }
 
-    //++
+    //++ tested
     @Override
     public Object remove(int index) {
         return removeObjectByIndex(index);
     }
 
-    //todo to jeszcze przemyslec jesli index jest w zakresie ale nie zwraca obiektu tylko nulla
-    //todo wielkosc tablicy czy zmienic.
     private Object removeObjectByIndex(int index) {
         if (checkIsIndexCorrect(index)) {
             Object elementToReturn = get(index);
@@ -198,8 +196,8 @@ public class MyArrayList implements List {
                     myArray[i] = myArray[i + 1];
                     myArray[i + 1] = null;
                 }
-                myArray = Arrays.copyOf(myArray, myArray.length - 1);
             }
+            myArray = Arrays.copyOf(myArray, myArray.length - 1);
             return elementToReturn;
         } else {
             return new IndexOutOfBoundsException("Index out of bound");
@@ -219,7 +217,8 @@ public class MyArrayList implements List {
                     return i;
                 }
             }
-        } else {
+        }
+        else {
             for (int i = 0; i < myArray.length; i++) {
                 if (element.equals(myArray[i])) {
                     return i;
@@ -269,11 +268,9 @@ public class MyArrayList implements List {
     }
 
     private List getSubList(int fromIndex, int toIndex) {
-        List newSubList = new ArrayList();
+        List newSubList = new MyArrayList();
         if (checkIsRangeIndexIsCorrect(fromIndex, toIndex)) {
-            for (int i = fromIndex; i <= toIndex; i++) {
-                newSubList.add(myArray[i]);
-            }
+            newSubList.addAll(Arrays.asList(myArray).subList(fromIndex, toIndex + 1));
             return newSubList;
         } else {
             throw new IllegalArgumentException("Wrong input");

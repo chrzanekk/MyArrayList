@@ -1,12 +1,13 @@
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import pl.com.konrad.myarraylist.MyArrayList;
+
+import java.util.List;
 
 import static org.junit.Assert.*;
 
 public class MyArrayListTest {
-    public static MyArrayList myArrayList;
+    public static List myArrayList;
 
     @Before
     public void initMyArrayList() {
@@ -28,39 +29,56 @@ public class MyArrayListTest {
 
     @Test
     public void testAddMethodByObject() {
+        Object testObject = new Object();
         int size = 11;
-        myArrayList.add(new Object());
+        myArrayList.add(testObject);
         int result = myArrayList.size();
 
         assertEquals(size, result);
     }
 
     @Test
-    public void testAddMethodByIndex() {
-        int size = 11;
+    public void testAddMethodByIndexAndIndexIsInTheMiddleOfArray() {
         myArrayList.add(1, new Object());
-        int result = myArrayList.size();
 
-        assertEquals(size, result);
+        assertEquals(11, myArrayList.size());
+    }
+
+    @Test
+    public void testAddMethodByIndexAndIndexIsInTheEndOfArray() {
+        Object testObject = new Object();
+        myArrayList.add(myArrayList.size(), testObject);
+
+        assertEquals(11, myArrayList.size());
+        assertEquals(10, myArrayList.indexOf(testObject));
     }
 
     @Test
     public void testRemoveMethodByObject() {
-        int size = 9;
-        myArrayList.remove(myArrayList.get(0));
-        int result = myArrayList.size();
-
-        assertEquals(size, result);
+        Object testObject = new Object();
+        myArrayList.add(testObject);
+        myArrayList.remove(testObject);
+        assertEquals(10, myArrayList.size());
     }
 
     @Test
-    public void testRemoveMethodByIndex() {
-        int size = 9;
-        myArrayList.remove(0);
-        int result = myArrayList.size();
+    public void testRemoveMethodByIndexAndIndexIsInTheMiddleOfArray() {
+        Object testObject = new Object();
+        myArrayList.add(2, testObject);
+        myArrayList.remove(2);
 
-        assertEquals(size, result);
+        assertEquals(10, myArrayList.size());
     }
+    @Test
+    public void testRemoveMethodByIndexAndIndexIsInTheEndOfArray() {
+        Object testObject = new Object();
+        myArrayList.add(myArrayList.size(), testObject);
+        Object removedObject = myArrayList.remove(myArrayList.indexOf(testObject));
+
+        assertEquals(testObject,removedObject);
+        assertEquals(10, myArrayList.size());
+    }
+
 
     @Test
     public void testContainsMethod() {
@@ -77,8 +95,6 @@ public class MyArrayListTest {
         assertFalse(result);
     }
 
-    //todo dopytac jak ogarnac test geta i seta (jak sprawdzic czy get zwraca dobry obiekt oraz czy set
-    // zmienia/podmienia obiekt ).
     @Test
     public void testGetMethod() {
         int size = 11;
@@ -92,6 +108,46 @@ public class MyArrayListTest {
         assertEquals(size, result);
         assertEquals(testObject, objectToGet);
     }
+
+    @Test
+    public void testClearMethod() {
+        myArrayList.clear();
+
+        assertEquals(0, myArrayList.size());
+    }
+
+    @Test
+    public void testSetMethodWhereReplacedObjectIsInMiddleOfArray() {
+        Object testObject = new Object();
+        Object replacedObject = myArrayList.get(2);
+        Object setObject = myArrayList.set(2,testObject);
+
+        assertEquals(replacedObject, setObject);
+    }
+    @Test
+    public void testSetMethodWhereReplacedObjectIsInTheEndOfArray() {
+        Object testObject = new Object();
+        Object replacedObject = myArrayList.get(myArrayList.size()-1);
+        Object setObject = myArrayList.set(myArrayList.size()-1,testObject);
+
+        assertEquals(replacedObject, setObject);
+    }
+
+    @Test
+    public void testIndexOfMethod(){
+        Object testObject = new Object();
+        myArrayList.add(testObject);
+
+        assertEquals(10,myArrayList.indexOf(testObject));
+    }
+
+    @Test
+    public void testIndexOfMethodWhenObjectIsNull(){
+
+        assertEquals(-1,myArrayList.indexOf(null));
+    }
+
+
 
 
 }
