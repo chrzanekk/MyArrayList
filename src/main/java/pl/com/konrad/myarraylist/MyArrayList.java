@@ -80,7 +80,8 @@ public class MyArrayList implements List {
     public boolean remove(Object element) {
         return removeObject(element);
     }
-//todo zmiana rozmiaru listy po usunieciu obiektu - czy trzeba
+
+    //todo zmiana rozmiaru listy po usunieciu obiektu - czy trzeba
     private boolean removeObject(Object element) {
         if (contains(element)) {
             int index = indexOf(element);
@@ -90,10 +91,12 @@ public class MyArrayList implements List {
                     myArray[i + 1] = null;
                 }
             } else {
-                int lastIndex = lastIndexOf(null);
-                myArray[lastIndex] = null;
+                myArray[index] = null;
             }
+            myArray = Arrays.copyOf(myArray, myArray.length - 1);
+            return true;
         }
+
         return false;
     }
 
@@ -141,7 +144,7 @@ public class MyArrayList implements List {
                 }
             }
         }
-        return null;
+        return new IndexOutOfBoundsException("Index out of bound.");
     }
 
     //++
@@ -166,9 +169,9 @@ public class MyArrayList implements List {
     private void addElementByIndex(int index, Object element) {
         if (checkIsIndexCorrect(index)) {
             if (checkIsArrayFull()) {
-                myArray = Arrays.copyOf(myArray, INITIAL_SIZE + 1);
+                myArray = Arrays.copyOf(myArray, myArray.length + 1);
             }
-            for (int i = index; i < myArray.length-1; i++) {
+            for (int i = index; i < myArray.length - 1; i++) {
                 myArray[i + 1] = myArray[i];
             }
             myArray[index] = element;
@@ -195,8 +198,7 @@ public class MyArrayList implements List {
                     myArray[i] = myArray[i + 1];
                     myArray[i + 1] = null;
                 }
-            } else {
-                myArray[myArray.length - 1] = null;
+                myArray = Arrays.copyOf(myArray, myArray.length - 1);
             }
             return elementToReturn;
         } else {

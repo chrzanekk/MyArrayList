@@ -35,7 +35,9 @@ public class Main {
         System.out.println("Object of index 9: " + myArrayList.get(9));
         System.out.println("Index of null object: " + myArrayList.indexOf(null));
         System.out.println("Index of test1 object: " + myArrayList.indexOf(test1));
-        System.out.println("Index of test1 object: " + myArrayList.indexOf(test2));
+        System.out.println("Index of test2 object: " + myArrayList.indexOf(test2));
+        System.out.println("Index of test3 object: " + myArrayList.indexOf(test3));
+        System.out.println("Index of test4 object: " + myArrayList.indexOf(test4));
 
         System.out.print("[");
         for (int i = 0; i < myArrayList.size(); i++) {
@@ -50,6 +52,7 @@ public class Main {
             System.out.print(myArrayList.get(i) + ", ");
         }
         System.out.println("]");
+        System.out.println("New size after remove: " + myArrayList.size());
 
     }
 

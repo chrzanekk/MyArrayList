@@ -44,27 +44,29 @@ public class MyArrayListTest {
         assertEquals(size, result);
     }
 
-//    @Test
-//    public void testRemoveMethodByObject() {
-//        myArrayList.remove(myArrayList.get(0));
-//        Object result = myArrayList.get(myArrayList.size() - 1);
-//
-//        assertNull(result);
-//    }
+    @Test
+    public void testRemoveMethodByObject() {
+        int size = 9;
+        myArrayList.remove(myArrayList.get(0));
+        int result = myArrayList.size();
 
-//    @Test
-//    public void testRemoveMethodByIndex() {
-//        myArrayList.remove(0);
-//        Object result = myArrayList.get(myArrayList.size() - 1);
-//
-//        assertNull(result);
-//    }
+        assertEquals(size, result);
+    }
+
+    @Test
+    public void testRemoveMethodByIndex() {
+        int size = 9;
+        myArrayList.remove(0);
+        int result = myArrayList.size();
+
+        assertEquals(size, result);
+    }
 
     @Test
     public void testContainsMethod() {
-
-        boolean result = myArrayList.contains(myArrayList.get(0));
-
+        Object testObject = new Object();
+        myArrayList.add(testObject);
+        boolean result = myArrayList.contains(testObject);
         assertTrue(result);
     }
 
@@ -72,17 +74,24 @@ public class MyArrayListTest {
     public void testIsEmptyMethod() {
         boolean result = myArrayList.isEmpty();
 
-        assertEquals(false, result);
+        assertFalse(result);
     }
 
     //todo dopytac jak ogarnac test geta i seta (jak sprawdzic czy get zwraca dobry obiekt oraz czy set
     // zmienia/podmienia obiekt ).
-//    @Test
-//    public void testGetMethod() {
-//        Object result = myArrayList.get(0);
-//
-//        assertEquals(myArrayList., result);
-//    }
+    @Test
+    public void testGetMethod() {
+        int size = 11;
+        Object testObject = new Object();
+
+        myArrayList.add(testObject);
+        int indexOfTestObject = myArrayList.indexOf(testObject);
+        Object objectToGet = myArrayList.get(indexOfTestObject);
+        int result = myArrayList.size();
+
+        assertEquals(size, result);
+        assertEquals(testObject, objectToGet);
+    }
 
 
 }
