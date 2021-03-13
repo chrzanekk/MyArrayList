@@ -181,4 +181,16 @@ public class MyArrayListByComparisonTest {
         assertEquals(-1,arrayList.indexOf(null));
     }
 
+    @Test
+    public void testSublistMethod(){
+        List myNewSublist = myArrayList.subList(2,6);
+        List newSublist = arrayList.subList(2,6);
+
+        assertEquals(4,myNewSublist.size());
+        assertEquals(4,newSublist.size());
+        assertEquals(myArrayList.get(2),myNewSublist.get(0));
+        assertEquals(arrayList.get(2),newSublist.get(0));
+    }
+
+
 }

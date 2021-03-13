@@ -2,6 +2,7 @@ import org.junit.Before;
 import org.junit.Test;
 import pl.com.konrad.myarraylist.MyArrayList;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -145,6 +146,14 @@ public class MyArrayListTest {
     public void testIndexOfMethodWhenObjectIsNull(){
 
         assertEquals(-1,myArrayList.indexOf(null));
+    }
+
+    @Test
+    public void testSublistMethod(){
+        List myNewSublist = myArrayList.subList(2,6);
+
+        assertEquals(4,myNewSublist.size());
+        assertEquals(myArrayList.get(2),myNewSublist.get(0));
     }
 
 

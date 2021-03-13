@@ -31,6 +31,10 @@ public class Main {
         myArrayList.add(test3);
         Object test4 = new Object();
         myArrayList.add(test4);
+        Object test5 = new Object();
+        myArrayList.add(test5);
+        Object test6 = new Object();
+        myArrayList.add(test6);
         System.out.println("New size: " + myArrayList.size());
         System.out.println("Object of index 9: " + myArrayList.get(9));
         System.out.println("Index of null object: " + myArrayList.indexOf(null));
@@ -53,6 +57,16 @@ public class Main {
         }
         System.out.println("]");
         System.out.println("New size after remove: " + myArrayList.size());
+
+        System.out.println("------sublist test------");
+        MyArrayList myNewSublist;
+        myNewSublist = (MyArrayList) myArrayList.subList(1,6);
+        System.out.print("[");
+        for (int i = 0; i < myNewSublist.size(); i++) {
+            System.out.print(myNewSublist.get(i) + ", ");
+        }
+        System.out.println("]");
+        System.out.println(myNewSublist.size());
 
     }
 

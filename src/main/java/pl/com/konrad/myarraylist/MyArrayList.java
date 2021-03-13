@@ -264,13 +264,17 @@ public class MyArrayList implements List {
     //++
     @Override
     public List subList(int fromIndex, int toIndex) {
-        return null;
+        return getSubList(fromIndex,toIndex);
     }
 
     private List getSubList(int fromIndex, int toIndex) {
         List newSubList = new MyArrayList();
         if (checkIsRangeIndexIsCorrect(fromIndex, toIndex)) {
-            newSubList.addAll(Arrays.asList(myArray).subList(fromIndex, toIndex + 1));
+            for(int i = fromIndex; i < toIndex; i++) {
+                newSubList.add(get(i));
+            }
+
+
             return newSubList;
         } else {
             throw new IllegalArgumentException("Wrong input");
