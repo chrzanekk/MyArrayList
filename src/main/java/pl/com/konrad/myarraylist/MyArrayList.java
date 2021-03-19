@@ -63,15 +63,11 @@ public class MyArrayList implements List {
     }
 
     private boolean addToArray(Object element) {
-        if (checkIsArrayFull()) {
-            myArray = Arrays.copyOf(myArray, myArray.length + 1);
+        myArray = Arrays.copyOf(myArray, myArray.length + 1);
 //            variable lastIndex only for test method lastIndexOf() - do poprawy
-            int lastIndex = lastIndexOf(null);
-            myArray[lastIndex] = element;
-        } else {
-            int lastIndex = lastIndexOf(null);
-            myArray[lastIndex] = element;
-        }
+        int lastIndex = lastIndexOf(null);
+        myArray[lastIndex] = element;
+
         return true;
     }
 
@@ -100,16 +96,48 @@ public class MyArrayList implements List {
         return false;
     }
 
+    //    ++ tested
     @Override
     public boolean addAll(Collection c) {
-        return false;
+        return addCollection(c);
     }
 
+    private boolean addCollection(Collection c) {
+        MyArrayList arrayToAdd = (MyArrayList) c;
+        int lastIndexOfMyArray = myArray.length;
+        myArray = Arrays.copyOf(myArray, myArray.length + c.size());
+        for (int i = 0; i < c.size(); i++) {
+            myArray[lastIndexOfMyArray] = arrayToAdd.get(i);
+            lastIndexOfMyArray++;
+        }
+        return true;
+    }
+
+    //   ++
     @Override
     public boolean addAll(int index, Collection c) {
+        return addCollectionByIndex(index, c);
+    }
+
+    private boolean addCollectionByIndex(int index, Collection c) {
+        if (checkIsIndexCorrect(index)) {
+            MyArrayList arrayToAdd = (MyArrayList) c;
+
+            myArray = Arrays.copyOf(myArray, myArray.length + c.size());
+
+            for (int i = myArray.length - 1; i >= index; i--) {
+                myArray[i] = myArray[i - c.size()];
+            }
+            for (int i = 0; i <= c.size(); i++) {
+                myArray[index] = arrayToAdd.get(i);
+                index++;
+            }
+            return true;
+        }
         return false;
     }
 
+    //    interfejsy funkcyjne
     @Override
     public void replaceAll(UnaryOperator operator) {
 
@@ -157,7 +185,7 @@ public class MyArrayList implements List {
         if (checkIsIndexCorrect(index)) {
             Object objectToReturn = myArray[index];
             myArray[index] = element;
-            return  objectToReturn;
+            return objectToReturn;
         }
         return new IndexOutOfBoundsException("Index out of bound.");
     }
@@ -217,8 +245,7 @@ public class MyArrayList implements List {
                     return i;
                 }
             }
-        }
-        else {
+        } else {
             for (int i = 0; i < myArray.length; i++) {
                 if (element.equals(myArray[i])) {
                     return i;
@@ -264,17 +291,15 @@ public class MyArrayList implements List {
     //++
     @Override
     public List subList(int fromIndex, int toIndex) {
-        return getSubList(fromIndex,toIndex);
+        return getSubList(fromIndex, toIndex);
     }
 
     private List getSubList(int fromIndex, int toIndex) {
         List newSubList = new MyArrayList();
         if (checkIsRangeIndexIsCorrect(fromIndex, toIndex)) {
-            for(int i = fromIndex; i < toIndex; i++) {
+            for (int i = fromIndex; i < toIndex; i++) {
                 newSubList.add(get(i));
             }
-
-
             return newSubList;
         } else {
             throw new IllegalArgumentException("Wrong input");

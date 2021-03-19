@@ -28,6 +28,7 @@ public class MyArrayListByComparisonTest {
         assertEquals(10, myArrayList.size());
         assertEquals(arrayList.size(), myArrayList.size());
     }
+
     @Test
     public void testAddMethodByObject() {
         Object testObject = new Object();
@@ -51,7 +52,7 @@ public class MyArrayListByComparisonTest {
     public void testAddMethodByIndexAndIndexIsInTheEndOfArray() {
         Object testObject = new Object();
         myArrayList.add(myArrayList.size(), testObject);
-        arrayList.add(arrayList.size(),testObject);
+        arrayList.add(arrayList.size(), testObject);
 
         assertEquals(11, myArrayList.size());
         assertEquals(10, myArrayList.indexOf(testObject));
@@ -78,7 +79,7 @@ public class MyArrayListByComparisonTest {
         int indexToTest = 2;
         myArrayList.add(indexToTest, testObject);
         myArrayList.remove(indexToTest);
-        arrayList.add(indexToTest,testObject);
+        arrayList.add(indexToTest, testObject);
         arrayList.remove(indexToTest);
 
         assertEquals(10, myArrayList.size());
@@ -89,13 +90,13 @@ public class MyArrayListByComparisonTest {
     public void testRemoveMethodByIndexAndIndexIsInTheEndOfArray() {
         Object testObject = new Object();
         myArrayList.add(myArrayList.size(), testObject);
-        arrayList.add(arrayList.size(),testObject);
+        arrayList.add(arrayList.size(), testObject);
 
         Object removedObjectFromMyArray = myArrayList.remove(myArrayList.indexOf(testObject));
         Object removedObjectFromArray = arrayList.remove(arrayList.indexOf(testObject));
 
-        assertEquals(testObject,removedObjectFromMyArray);
-        assertEquals(testObject,removedObjectFromArray);
+        assertEquals(testObject, removedObjectFromMyArray);
+        assertEquals(testObject, removedObjectFromArray);
         assertEquals(10, myArrayList.size());
         assertEquals(10, arrayList.size());
     }
@@ -109,6 +110,16 @@ public class MyArrayListByComparisonTest {
         boolean resultForArray = myArrayList.contains(testObject);
         assertTrue(resultForMyArray);
         assertTrue(resultForArray);
+    }
+
+    @Test
+    public void testContainsMethodWhereObjecIsNotInArray() {
+        Object testObject = new Object();
+
+        boolean resultForMyArray = myArrayList.contains(testObject);
+        boolean resultForArray = myArrayList.contains(testObject);
+        assertFalse(resultForMyArray);
+        assertFalse(resultForArray);
     }
 
     @Test
@@ -141,13 +152,14 @@ public class MyArrayListByComparisonTest {
         assertEquals(0, myArrayList.size());
         assertEquals(0, arrayList.size());
     }
+
     @Test
     public void testSetMethodWhereReplacedObjectIsInMiddleOfArray() {
         Object testObject = new Object();
         Object replacedObjectFromMyArray = myArrayList.get(2);
         Object replacedObjectFromArray = arrayList.get(2);
-        Object setObjectToMyArray = myArrayList.set(2,testObject);
-        Object setObjectToArray = arrayList.set(2,testObject);
+        Object setObjectToMyArray = myArrayList.set(2, testObject);
+        Object setObjectToArray = arrayList.set(2, testObject);
 
         assertEquals(replacedObjectFromMyArray, setObjectToMyArray);
         assertEquals(replacedObjectFromArray, setObjectToArray);
@@ -156,41 +168,87 @@ public class MyArrayListByComparisonTest {
     @Test
     public void testSetMethodWhereReplacedObjectIsInTheEndOfArray() {
         Object testObject = new Object();
-        Object replacedObjectFromMyArray = myArrayList.get(myArrayList.size()-1);
-        Object replacedObjectFromArray = arrayList.get(arrayList.size()-1);
-        Object setObjectInMyArray = myArrayList.set(myArrayList.size()-1,testObject);
-        Object setObjectInArray = arrayList.set(arrayList.size()-1,testObject);
+        Object replacedObjectFromMyArray = myArrayList.get(myArrayList.size() - 1);
+        Object replacedObjectFromArray = arrayList.get(arrayList.size() - 1);
+        Object setObjectInMyArray = myArrayList.set(myArrayList.size() - 1, testObject);
+        Object setObjectInArray = arrayList.set(arrayList.size() - 1, testObject);
 
         assertEquals(replacedObjectFromMyArray, setObjectInMyArray);
         assertEquals(replacedObjectFromArray, setObjectInArray);
     }
 
     @Test
-    public void testIndexOfMethod(){
+    public void testIndexOfMethod() {
         Object testObject = new Object();
         myArrayList.add(testObject);
         arrayList.add(testObject);
 
-        assertEquals(10,myArrayList.indexOf(testObject));
-        assertEquals(10,arrayList.indexOf(testObject));
+        assertEquals(10, myArrayList.indexOf(testObject));
+        assertEquals(10, arrayList.indexOf(testObject));
+    }
+
+
+    @Test
+    public void testIndexOfMethodWhenObjectIsNull() {
+        assertEquals(-1, myArrayList.indexOf(null));
+        assertEquals(-1, arrayList.indexOf(null));
     }
 
     @Test
-    public void testIndexOfMethodWhenObjectIsNull(){
-        assertEquals(-1,myArrayList.indexOf(null));
-        assertEquals(-1,arrayList.indexOf(null));
+    public void testSublistMethod() {
+        List myNewSublist = myArrayList.subList(2, 6);
+        List newSublist = arrayList.subList(2, 6);
+
+        assertEquals(4, myNewSublist.size());
+        assertEquals(4, newSublist.size());
+        assertEquals(myArrayList.get(2), myNewSublist.get(0));
+        assertEquals(arrayList.get(2), newSublist.get(0));
     }
 
     @Test
-    public void testSublistMethod(){
-        List myNewSublist = myArrayList.subList(2,6);
-        List newSublist = arrayList.subList(2,6);
+    public void testAddAllMethod(){
+        MyArrayList myArrayToAdd = new MyArrayList();
+        List arrayToAdd = new ArrayList();
+        Object testObject1 = new Object();
+        Object testObject2 = new Object();
+        Object testObject3 = new Object();
+        myArrayToAdd.add(testObject1);
+        myArrayToAdd.add(testObject2);
+        myArrayToAdd.add(testObject3);
+        arrayToAdd.add(testObject1);
+        arrayToAdd.add(testObject2);
+        arrayToAdd.add(testObject3);
+        myArrayList.addAll(myArrayToAdd);
+        arrayList.addAll(arrayToAdd);
 
-        assertEquals(4,myNewSublist.size());
-        assertEquals(4,newSublist.size());
-        assertEquals(myArrayList.get(2),myNewSublist.get(0));
-        assertEquals(arrayList.get(2),newSublist.get(0));
+        assertEquals(13, myArrayList.size());
+        assertTrue(myArrayList.contains(testObject3));
+        assertEquals(13, arrayList.size());
+        assertTrue(arrayList.contains(testObject3));
     }
 
+    @Test
+    public void testAddAllMethodByIndex(){
+        MyArrayList myArrayToAdd = new MyArrayList();
+        List arrayToAdd = new ArrayList();
+        Object testObject1 = new Object();
+        Object testObject2 = new Object();
+        Object testObject3 = new Object();
+        myArrayToAdd.add(testObject1);
+        myArrayToAdd.add(testObject2);
+        myArrayToAdd.add(testObject3);
+        arrayToAdd.add(testObject1);
+        arrayToAdd.add(testObject2);
+        arrayToAdd.add(testObject3);
+        myArrayList.addAll(5,myArrayToAdd);
+        arrayList.addAll(5,arrayToAdd);
+
+        assertEquals(13, myArrayList.size());
+        assertTrue(myArrayList.contains(testObject3));
+        assertEquals(7,myArrayList.indexOf(testObject3));
+        assertEquals(13, arrayList.size());
+        assertTrue(arrayList.contains(testObject3));
+        assertEquals(7,arrayList.indexOf(testObject3));
+    }
 
 }

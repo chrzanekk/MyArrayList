@@ -3,6 +3,7 @@ import org.junit.Test;
 import pl.com.konrad.myarraylist.MyArrayList;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -155,6 +156,39 @@ public class MyArrayListTest {
         assertEquals(4,myNewSublist.size());
         assertEquals(myArrayList.get(2),myNewSublist.get(0));
     }
+
+    @Test
+    public void testAddAllMethod(){
+        MyArrayList arrayToAdd = new MyArrayList();
+        Object testObject1 = new Object();
+        Object testObject2 = new Object();
+        Object testObject3 = new Object();
+        arrayToAdd.add(testObject1);
+        arrayToAdd.add(testObject2);
+        arrayToAdd.add(testObject3);
+        myArrayList.addAll(arrayToAdd);
+
+        assertEquals(13, myArrayList.size());
+        assertTrue(myArrayList.contains(testObject3));
+    }
+
+    @Test
+    public void testAddAllMethodByIndex(){
+        MyArrayList arrayToAdd = new MyArrayList();
+        Object testObject1 = new Object();
+        Object testObject2 = new Object();
+        Object testObject3 = new Object();
+        arrayToAdd.add(testObject1);
+        arrayToAdd.add(testObject2);
+        arrayToAdd.add(testObject3);
+        myArrayList.addAll(5,arrayToAdd);
+
+        assertEquals(13, myArrayList.size());
+        assertTrue(myArrayList.contains(testObject3));
+        assertEquals(7,myArrayList.indexOf(testObject3));
+    }
+
+
 
 
 
