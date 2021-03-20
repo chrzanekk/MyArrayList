@@ -84,11 +84,12 @@ public class MyArrayList implements List {
             if (index < myArray.length - 1) {
                 for (int i = index; i < myArray.length - 1; i++) {
                     myArray[i] = myArray[i + 1];
-                    myArray[i + 1] = null;
+//                    myArray[i + 1] = null;
                 }
-            } else {
-                myArray[index] = null;
             }
+//            else {
+//                myArray[index] = null;
+//            }
             myArray = Arrays.copyOf(myArray, myArray.length - 1);
             return true;
         }
@@ -103,23 +104,26 @@ public class MyArrayList implements List {
     }
 
     private boolean addCollection(Collection c) {
+        int booleanFlag = 0;
         MyArrayList arrayToAdd = (MyArrayList) c;
         int lastIndexOfMyArray = myArray.length;
         myArray = Arrays.copyOf(myArray, myArray.length + c.size());
         for (int i = 0; i < c.size(); i++) {
             myArray[lastIndexOfMyArray] = arrayToAdd.get(i);
             lastIndexOfMyArray++;
+            booleanFlag++;
         }
-        return true;
+        return booleanFlag > 0;
     }
 
-    //   ++
+    // ++ tested
     @Override
     public boolean addAll(int index, Collection c) {
         return addCollectionByIndex(index, c);
     }
 
     private boolean addCollectionByIndex(int index, Collection c) {
+        int booleanFlag = 0;
         if (checkIsIndexCorrect(index)) {
             MyArrayList arrayToAdd = (MyArrayList) c;
 
@@ -131,10 +135,11 @@ public class MyArrayList implements List {
             for (int i = 0; i <= c.size(); i++) {
                 myArray[index] = arrayToAdd.get(i);
                 index++;
+                booleanFlag++;
             }
-            return true;
+            return booleanFlag > 0;
         }
-        return false;
+        throw new IndexOutOfBoundsException("Index out of bound.");
     }
 
     //    interfejsy funkcyjne
@@ -148,7 +153,7 @@ public class MyArrayList implements List {
 
     }
 
-    //++ testes
+    //++ tested
     @Override
     public void clear() {
         clearArray();
@@ -288,7 +293,7 @@ public class MyArrayList implements List {
         return null;
     }
 
-    //++
+    //++ tested
     @Override
     public List subList(int fromIndex, int toIndex) {
         return getSubList(fromIndex, toIndex);
@@ -319,7 +324,18 @@ public class MyArrayList implements List {
     //++
     @Override
     public boolean removeAll(Collection c) {
-        return false;
+        return removeAllFromCollection(c);
+    }
+
+    private boolean removeAllFromCollection(Collection collection) {
+        int booleanFlag = 0;
+        for (Object o : myArray) {
+            if (collection.contains(o)) {
+                removeObject(o);
+                booleanFlag++;
+            }
+        }
+        return booleanFlag > 0;
     }
 
     //++

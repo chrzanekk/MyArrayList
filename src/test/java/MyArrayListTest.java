@@ -2,8 +2,8 @@ import org.junit.Before;
 import org.junit.Test;
 import pl.com.konrad.myarraylist.MyArrayList;
 
+
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -91,6 +91,16 @@ public class MyArrayListTest {
     }
 
     @Test
+    public void testContainsMethodWhereObjectIsNotInArray() {
+        Object testObject = new Object();
+
+        boolean resultForMyArray = myArrayList.contains(testObject);
+
+        assertFalse(resultForMyArray);
+
+    }
+
+    @Test
     public void testIsEmptyMethod() {
         boolean result = myArrayList.isEmpty();
 
@@ -166,6 +176,7 @@ public class MyArrayListTest {
         arrayToAdd.add(testObject1);
         arrayToAdd.add(testObject2);
         arrayToAdd.add(testObject3);
+
         myArrayList.addAll(arrayToAdd);
 
         assertEquals(13, myArrayList.size());
@@ -181,6 +192,7 @@ public class MyArrayListTest {
         arrayToAdd.add(testObject1);
         arrayToAdd.add(testObject2);
         arrayToAdd.add(testObject3);
+
         myArrayList.addAll(5,arrayToAdd);
 
         assertEquals(13, myArrayList.size());
@@ -188,8 +200,58 @@ public class MyArrayListTest {
         assertEquals(7,myArrayList.indexOf(testObject3));
     }
 
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testAddAllMethodByIndexWhereIndexIsOutOfBound(){
+        MyArrayList myArrayToAdd = new MyArrayList();
+        Object testObject1 = new Object();
+        Object testObject2 = new Object();
+        Object testObject3 = new Object();
+        myArrayToAdd.add(testObject1);
+        myArrayToAdd.add(testObject2);
+        myArrayToAdd.add(testObject3);
+
+        boolean myArrayResult = myArrayList.addAll(11,myArrayToAdd);
+
+        assertFalse(myArrayResult);
+    }
 
 
+
+    @Test
+    public void testRemoveAllMethod(){
+        MyArrayList arrayToRemove = new MyArrayList();
+        Object testObject1 = myArrayList.get(2);
+        Object testObject2 = myArrayList.get(4);
+        Object testObject3 = myArrayList.get(6);
+        arrayToRemove.add(testObject1);
+        arrayToRemove.add(testObject2);
+        arrayToRemove.add(testObject3);
+
+        boolean result = myArrayList.removeAll(arrayToRemove);
+
+        assertEquals(7, myArrayList.size());
+        assertFalse(myArrayList.contains(testObject3));
+        assertTrue(result);
+    }
+
+    @Test
+    public void testRemoveAllMethodWhitOneObjectNotContain(){
+        MyArrayList myArrayToRemove = new MyArrayList();
+        Object testObject1 = myArrayList.get(2);
+        Object testObject2 = myArrayList.get(4);
+        Object testObject3 = myArrayList.get(6);
+        Object testObject4 = new Object();
+        myArrayToRemove.add(testObject1);
+        myArrayToRemove.add(testObject2);
+        myArrayToRemove.add(testObject3);
+        myArrayToRemove.add(testObject4);
+
+        boolean result = myArrayList.removeAll(myArrayToRemove);
+
+        assertEquals(7, myArrayList.size());
+        assertFalse(myArrayList.contains(testObject3));
+        assertTrue(result);
+    }
 
 
 
