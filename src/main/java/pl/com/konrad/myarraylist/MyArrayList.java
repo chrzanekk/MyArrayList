@@ -38,6 +38,9 @@ public class MyArrayList implements List {
     }
 
     private boolean isObjectExists(Object element) {
+        if (element == null) {
+            return false;
+        }
         for (Object value : myArray) {
             if (value.equals(element)) {
                 return true;
@@ -82,18 +85,13 @@ public class MyArrayList implements List {
         if (contains(element)) {
             int index = indexOf(element);
             if (index < myArray.length - 1) {
-                for (int i = index; i < myArray.length - 1; i++) {
+                for (int i = index; i < myArray.length; i++) {
                     myArray[i] = myArray[i + 1];
-//                    myArray[i + 1] = null;
                 }
             }
-//            else {
-//                myArray[index] = null;
-//            }
             myArray = Arrays.copyOf(myArray, myArray.length - 1);
             return true;
         }
-
         return false;
     }
 
@@ -104,6 +102,9 @@ public class MyArrayList implements List {
     }
 
     private boolean addCollection(Collection c) {
+        if (c.isEmpty()) {
+            return false;
+        }
         int booleanFlag = 0;
         MyArrayList arrayToAdd = (MyArrayList) c;
         int lastIndexOfMyArray = myArray.length;
@@ -123,6 +124,9 @@ public class MyArrayList implements List {
     }
 
     private boolean addCollectionByIndex(int index, Collection c) {
+        if (c.isEmpty()) {
+            return false;
+        }
         int booleanFlag = 0;
         if (checkIsIndexCorrect(index)) {
             MyArrayList arrayToAdd = (MyArrayList) c;
@@ -328,6 +332,10 @@ public class MyArrayList implements List {
     }
 
     private boolean removeAllFromCollection(Collection collection) {
+        if (collection.isEmpty()) {
+            return false;
+        }
+
         int booleanFlag = 0;
         for (Object o : myArray) {
             if (collection.contains(o)) {
@@ -341,7 +349,22 @@ public class MyArrayList implements List {
     //++
     @Override
     public boolean containsAll(Collection c) {
-        return false;
+        return containsAllElements(c);
+    }
+
+    private boolean containsAllElements(Collection collection) {
+        if (collection.isEmpty()) {
+            return true;
+        }
+
+        int targetSum = collection.size();
+        int counter = 0;
+        for (Object o : myArray) {
+            if (collection.contains(o) && o!=null) {
+                counter++;
+            }
+        }
+        return counter == targetSum;
     }
 
     @Override

@@ -78,10 +78,10 @@ public class Main {
         System.out.println("Arr 1 before removeAll() operation" + arr1);
 
         List<Integer> arr2 = new ArrayList<>();
-        arr2.add(6);
-        arr2.add(6);
-        arr2.add(6);
-        boolean result = arr1.addAll(arr2);
+//        arr2.add(null);
+//        arr2.add(6);
+//        arr2.add(6);
+        boolean result = arr1.containsAll(arr2);
         System.out.println("Arr 1 after removeAll() operation" + arr1 + result );
 
 
