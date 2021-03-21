@@ -82,7 +82,6 @@ public class MyArrayListTest {
         assertEquals(10, myArrayList.size());
     }
 
-
     @Test
     public void testContainsMethod() {
         Object testObject = new Object();

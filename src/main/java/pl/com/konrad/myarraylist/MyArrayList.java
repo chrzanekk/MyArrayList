@@ -42,7 +42,7 @@ public class MyArrayList implements List {
             return false;
         }
         for (Object value : myArray) {
-            if (value.equals(element)) {
+            if (element.equals(value)) {
                 return true;
             }
         }
@@ -80,12 +80,11 @@ public class MyArrayList implements List {
         return removeObject(element);
     }
 
-    //todo zmiana rozmiaru listy po usunieciu obiektu - czy trzeba
     private boolean removeObject(Object element) {
         if (contains(element)) {
             int index = indexOf(element);
             if (index < myArray.length - 1) {
-                for (int i = index; i < myArray.length; i++) {
+                for (int i = index; i < myArray.length - 1; i++) {
                     myArray[i] = myArray[i + 1];
                 }
             }
@@ -325,7 +324,7 @@ public class MyArrayList implements List {
         return false;
     }
 
-    //++
+    //++ tested
     @Override
     public boolean removeAll(Collection c) {
         return removeAllFromCollection(c);
@@ -346,7 +345,7 @@ public class MyArrayList implements List {
         return booleanFlag > 0;
     }
 
-    //++
+    //++ tested
     @Override
     public boolean containsAll(Collection c) {
         return containsAllElements(c);
@@ -360,7 +359,7 @@ public class MyArrayList implements List {
         int targetSum = collection.size();
         int counter = 0;
         for (Object o : myArray) {
-            if (collection.contains(o) && o!=null) {
+            if (collection.contains(o) && o != null) {
                 counter++;
             }
         }
@@ -381,9 +380,7 @@ public class MyArrayList implements List {
     }
 
     private boolean checkIsRangeIndexIsCorrect(int fromIndex, int toIndex) {
-        if (fromIndex < 0) {
-            return false;
-        } else if (toIndex > myArray.length) {
+        if ((fromIndex < 0) || (toIndex > myArray.length)) {
             return false;
         } else return fromIndex <= toIndex;
     }

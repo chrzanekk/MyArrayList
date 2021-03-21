@@ -65,12 +65,14 @@ public class MyArrayListByComparisonTest {
     public void testRemoveMethodByObject() {
         Object testObject = new Object();
         myArrayList.add(testObject);
-        myArrayList.remove(testObject);
+        boolean myArrayResult = myArrayList.remove(testObject);
         arrayList.add(testObject);
-        arrayList.remove(testObject);
+        boolean arrayResult = arrayList.remove(testObject);
 
         assertEquals(10, myArrayList.size());
         assertEquals(10, arrayList.size());
+        assertTrue(myArrayResult);
+        assertTrue(arrayResult);
     }
 
     @Test
@@ -78,12 +80,14 @@ public class MyArrayListByComparisonTest {
         Object testObject = new Object();
         int indexToTest = 2;
         myArrayList.add(indexToTest, testObject);
-        myArrayList.remove(indexToTest);
+        Object removedObjectFromMyArray = myArrayList.remove(indexToTest);
         arrayList.add(indexToTest, testObject);
-        arrayList.remove(indexToTest);
+        Object removedObjectFromArray = arrayList.remove(indexToTest);
 
         assertEquals(10, myArrayList.size());
         assertEquals(10, arrayList.size());
+        assertEquals(testObject,removedObjectFromMyArray);
+        assertEquals(testObject,removedObjectFromArray);
     }
 
     @Test

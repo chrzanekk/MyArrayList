@@ -60,7 +60,7 @@ public class Main {
 
         System.out.println("------sublist test------");
         MyArrayList myNewSublist;
-        myNewSublist = (MyArrayList) myArrayList.subList(1,3);
+        myNewSublist = (MyArrayList) myArrayList.subList(1, 3);
         System.out.print("[");
         for (int i = 0; i < myNewSublist.size(); i++) {
             System.out.print(myNewSublist.get(i) + ", ");
@@ -82,9 +82,7 @@ public class Main {
 //        arr2.add(6);
 //        arr2.add(6);
         boolean result = arr1.containsAll(arr2);
-        System.out.println("Arr 1 after removeAll() operation" + arr1 + result );
-
-
+        System.out.println("Arr 1 after removeAll() operation" + arr1 + result);
 
 
     }
